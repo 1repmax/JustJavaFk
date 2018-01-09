@@ -5,4 +5,7 @@
     <string name="button_text">Order</string>
     <string name="summary_label">Order Summary</string>
     <string name="price_number">0</string>
+    <string name="toppings">Toppings</string>
+    <string name="whipped_cream">Whipped cream</string>
+    <string name="chocolate_topping">Chocolate topping</string>
 </resources>

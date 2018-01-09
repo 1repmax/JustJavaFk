@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    tools:context="com.example.android.justjava.MainActivity">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.android.justjava.MainActivity">
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/toppings"
+        android:textAllCaps="true"
+        android:layout_marginLeft="12dp"/>
+
+
+
+        <CheckBox
+            android:id="@+id/whipped_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/whipped_cream" />
+
+        <CheckBox
+            android:id="@+id/chocolate_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/chocolate_topping" />
+
 
     <TextView
         android:id="@+id/quantity_text"
@@ -13,7 +41,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:text="@string/quantity_text"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:layout_marginLeft="12dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,10 +53,10 @@
             android:id="@+id/decrement_id"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:onClick="decrement"
             android:paddingTop="16dp"
             android:text="-"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:layout_marginLeft="12dp"/>
 
 
         <TextView
@@ -45,7 +74,6 @@
             android:id="@+id/increment_id"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:onClick="increment"
             android:paddingTop="16dp"
             android:text="+"
             android:textAllCaps="true" />
@@ -58,23 +86,27 @@
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:text="@string/summary_label"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/price_number_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:text="@string/price_number" />
+        android:text="@string/price_number"
+        android:layout_marginLeft="12dp"/>
 
     <Button
-        android:id="@+id/button_id"
+        android:id="@+id/submit_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="submitOrder"
         android:paddingTop="16dp"
         android:text="@string/button_text"
-        android:textAllCaps="true" />
+        android:textAllCaps="true"
+        android:layout_marginLeft="12dp"/>
 
 
 </LinearLayout>
+</ScrollView>
