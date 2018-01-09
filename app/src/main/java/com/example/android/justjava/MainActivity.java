@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +29,17 @@ public class MainActivity extends AppCompatActivity {
     static final String PRICE_TOTAL = "priceTotal";
     static final String WHIPPED_CREAM = "whippedCream";
     static final String CHOCOLATE_TOPPING = "chocolateTopping";
+
     int quantity = 0;
     int priceOfCup = 3;
+
     String name = "Raivo Lapins";
     TextView quantityTextview, priceTextview;
     Button incrementAmount, decrementAmount, submitOrder;
     CheckBox whippedCreamCheckbox, chocolateCheckbox;
     boolean hasWhippedCream;
     boolean hasChocolate;
+
 
     //Save data into bundle
     @Override
@@ -45,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putInt(PRICE_TOTAL, calculatePrice(quantity, priceOfCup));
         savedInstanceState.putBoolean(WHIPPED_CREAM, hasWhippedCream);
         savedInstanceState.putBoolean(CHOCOLATE_TOPPING, hasChocolate);
-
     }
 
     //Restore states of CheckBoxes and TextViews
@@ -56,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         int priceTotal = savedInstanceState.getInt(PRICE_TOTAL);
         hasWhippedCream = savedInstanceState.getBoolean(WHIPPED_CREAM);
         hasChocolate = savedInstanceState.getBoolean(CHOCOLATE_TOPPING);
-        whippedCreamCheckbox.setChecked(hasWhippedCream);
-        chocolateCheckbox.setChecked(hasChocolate);
         displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate));
     }
 
@@ -75,7 +76,31 @@ public class MainActivity extends AppCompatActivity {
         whippedCreamCheckbox = findViewById(R.id.whipped_checkbox);
         chocolateCheckbox = findViewById(R.id.chocolate_checkbox);
 
+        whippedCreamCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
+                if (whippedCreamCheckbox.isChecked())
+                {
+                    hasWhippedCream = true;
+                }
+                else{
+                    hasWhippedCream = false;
+                }
+            }
+        });
 
+        chocolateCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
+                if (chocolateCheckbox.isChecked())
+                {
+                    hasChocolate = true;
+                }
+                else{
+                    hasChocolate = false;
+                }
+            }
+        });
 
         /**
          * This method is called when the order button is clicked.

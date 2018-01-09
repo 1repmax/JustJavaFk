@@ -25,14 +25,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:text="@string/whipped_cream" />
+            android:text="@string/whipped_cream"
+            android:saveEnabled="true"/>
 
         <CheckBox
             android:id="@+id/chocolate_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:text="@string/chocolate_topping" />
+            android:text="@string/chocolate_topping"
+            android:saveEnabled="true"/>
 
 
     <TextView
