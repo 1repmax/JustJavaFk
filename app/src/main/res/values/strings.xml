@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JustJava</string>
+    <string name="app_name">CaffeInn</string>
     <string name="quantity_text">Quantity</string>
     <string name="quantity_number">0</string>
     <string name="button_text">Order</string>
@@ -8,4 +8,7 @@
     <string name="toppings">Toppings</string>
     <string name="whipped_cream">Whipped cream</string>
     <string name="chocolate_topping">Chocolate topping</string>
+    <string name="namefield_hint">Enter your name</string>
+    <string name="decrement_button_string">-</string>
+    <string name="increment_button_string">+</string>
 </resources>

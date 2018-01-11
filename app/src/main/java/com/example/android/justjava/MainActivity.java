@@ -7,13 +7,17 @@
 
 package com.example.android.justjava;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +33,17 @@ public class MainActivity extends AppCompatActivity {
     static final String PRICE_TOTAL = "priceTotal";
     static final String WHIPPED_CREAM = "whippedCream";
     static final String CHOCOLATE_TOPPING = "chocolateTopping";
+    static final String HAS_CREAM_BOOL = "hasCream";
+    static final String HAS_CHOCO_BOOL = "hasChoco";
+    static final String USERS_NAME = "username";
 
     int quantity = 0;
     int priceOfCup = 3;
-
     String name = "Raivo Lapins";
     TextView quantityTextview, priceTextview;
     Button incrementAmount, decrementAmount, submitOrder;
     CheckBox whippedCreamCheckbox, chocolateCheckbox;
+    EditText nameField;
     boolean hasWhippedCream;
     boolean hasChocolate;
 
@@ -49,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         savedInstanceState.putInt(PRICE_TOTAL, calculatePrice(quantity, priceOfCup));
         savedInstanceState.putBoolean(WHIPPED_CREAM, hasWhippedCream);
         savedInstanceState.putBoolean(CHOCOLATE_TOPPING, hasChocolate);
+        savedInstanceState.putBoolean(HAS_CREAM_BOOL, whippedCreamCheckbox.isChecked());
+        savedInstanceState.putBoolean(HAS_CHOCO_BOOL, chocolateCheckbox.isChecked());
+        savedInstanceState.putString(USERS_NAME, nameField.getText().toString());
+
     }
 
     //Restore states of CheckBoxes and TextViews
@@ -59,7 +70,17 @@ public class MainActivity extends AppCompatActivity {
         int priceTotal = savedInstanceState.getInt(PRICE_TOTAL);
         hasWhippedCream = savedInstanceState.getBoolean(WHIPPED_CREAM);
         hasChocolate = savedInstanceState.getBoolean(CHOCOLATE_TOPPING);
-        displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate));
+        nameField.setText(savedInstanceState.getString(USERS_NAME));
+
+        //Restore values of Checkbox state booleans
+        boolean whippedCreamState = savedInstanceState.getBoolean(HAS_CREAM_BOOL);
+        boolean chocoState = savedInstanceState.getBoolean(HAS_CHOCO_BOOL);
+
+        //Pass the values of booleans to checkboxes to make sure they are
+        whippedCreamCheckbox.setChecked(whippedCreamState);
+        chocolateCheckbox.setChecked(chocoState);
+
+        displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate, name));
     }
 
     //Creates the applications UI and initializes it's Views.
@@ -75,30 +96,54 @@ public class MainActivity extends AppCompatActivity {
         decrementAmount = findViewById(R.id.decrement_id);
         whippedCreamCheckbox = findViewById(R.id.whipped_checkbox);
         chocolateCheckbox = findViewById(R.id.chocolate_checkbox);
+        nameField = findViewById(R.id.name_field);
+        nameField.setHint(R.string.namefield_hint);
+
+        nameField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                name = nameField.getText().toString();
+                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+            }
+
+
+
+        });
+        priceTextview.setText(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+
+
 
         whippedCreamCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
-                if (whippedCreamCheckbox.isChecked())
-                {
+                if (whippedCreamCheckbox.isChecked()) {
                     hasWhippedCream = true;
-                }
-                else{
+                } else {
                     hasWhippedCream = false;
                 }
+                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
             }
         });
 
         chocolateCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
-                if (chocolateCheckbox.isChecked())
-                {
+                if (chocolateCheckbox.isChecked()) {
                     hasChocolate = true;
-                }
-                else{
+                } else {
                     hasChocolate = false;
                 }
+                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
             }
         });
 
@@ -122,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 int priceTotal = calculatePrice(quantity, priceOfCup);
-                displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate));
+                displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate, name));
             }
         });
 
@@ -134,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 quantity = quantity + 1;
                 displayQuantity(quantity);
+                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
             }
         });
 
@@ -150,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     displayQuantity(quantity);
                     int priceOfCup = 3;
                     calculatePrice(quantity, priceOfCup);
+                    displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
                 }
             }
         });
@@ -162,8 +209,20 @@ public class MainActivity extends AppCompatActivity {
      * @return total price
      */
     private int calculatePrice(int quantity, int priceOfCup) {
+        if(hasWhippedCream) {
+            priceOfCup = 4;
+        }
+        if(hasChocolate)
+        {
+            priceOfCup = 4;
+        }
+
+        if(hasChocolate && hasWhippedCream) {
+            priceOfCup = 5;
+        }
         return quantity * priceOfCup;
     }
+
 
     /**
      * Create summary of the order.
@@ -171,14 +230,35 @@ public class MainActivity extends AppCompatActivity {
      * @param price of the order
      * @return text summary
      */
-    private String createOrderSummary(int price, boolean addWhippedCream, boolean addChocolate) {
+    private String createOrderSummary(int price, boolean addWhippedCream, boolean addChocolate, String name) {
+        String addWhippedCreamString;
+        String addChocolateString;
+        name = nameField.getText().toString();
+        if(addWhippedCream){
+            addWhippedCreamString = "Whipped cream: YES";
+        }
+        else {
+            addWhippedCreamString = "Whipped cream: NO";
+        }
 
-        String priceMessage = "Name: " + name;
-        priceMessage += "\nAdd whipped cream? " + addWhippedCream;
-        priceMessage += "\nAdd chocolate? " + addChocolate;
-        priceMessage += "\nQuantity: " + quantity;
-        priceMessage += "\nTotal: " + NumberFormat.getCurrencyInstance().format(price);
-        priceMessage += "\nThank you!";
+        if(addChocolate){
+            addChocolateString = "Chocolate: YES";
+        }
+        else {
+            addChocolateString = "Chocolate: NO";
+        }
+        String priceMessage = "";
+
+
+        if (quantity >= 0) {
+            priceMessage = "Name: " + name;
+            priceMessage += "\n" + addWhippedCreamString;
+            priceMessage += "\n" + addChocolateString;
+            priceMessage += "\nQuantity: " + quantity;
+            priceMessage += "\nTotal: " + NumberFormat.getCurrencyInstance().format(price);
+            priceMessage += "\nThank you!";
+            return priceMessage;
+        }
         return priceMessage;
     }
 
