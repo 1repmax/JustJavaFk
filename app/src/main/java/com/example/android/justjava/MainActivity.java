@@ -7,13 +7,17 @@
 
 package com.example.android.justjava;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -37,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
     static final String HAS_CHOCO_BOOL = "hasChoco";
     static final String USERS_NAME = "username";
 
-    int quantity = 0;
+    int quantity = 1;
     int priceOfCup = 3;
-    String name = "Raivo Lapins";
+    String name;
     TextView quantityTextview, priceTextview;
     Button incrementAmount, decrementAmount, submitOrder;
     CheckBox whippedCreamCheckbox, chocolateCheckbox;
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         whippedCreamCheckbox.setChecked(whippedCreamState);
         chocolateCheckbox.setChecked(chocoState);
 
-        displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate, name));
+        createOrderSummary(priceTotal, hasWhippedCream, hasChocolate, name);
     }
 
     //Creates the applications UI and initializes it's Views.
@@ -113,15 +117,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 name = nameField.getText().toString();
-                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+                createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name);
             }
 
 
 
         });
-        priceTextview.setText(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
-
-
 
         whippedCreamCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     hasWhippedCream = false;
                 }
-                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+                createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name);
             }
         });
 
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     hasChocolate = false;
                 }
-                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+                createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name);
             }
         });
 
@@ -167,7 +168,18 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 int priceTotal = calculatePrice(quantity, priceOfCup);
-                displayMessage(createOrderSummary(priceTotal, hasWhippedCream, hasChocolate, name));
+                createOrderSummary(priceTotal, hasWhippedCream, hasChocolate, name);
+
+                // Create a new intent to send confirmation email with a email app
+                Intent sendConfirmationEmail = new Intent(Intent.ACTION_SENDTO);
+                sendConfirmationEmail.setType("*/*");
+                sendConfirmationEmail.setData(Uri.parse("mailto:"));
+                sendConfirmationEmail.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.caffeinn_order, name));
+                sendConfirmationEmail.putExtra(Intent.EXTRA_TEXT, createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+
+                if (sendConfirmationEmail.resolveActivity(getPackageManager()) != null) {
+                    startActivity(sendConfirmationEmail);
+                }
             }
         });
 
@@ -179,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 quantity = quantity + 1;
                 displayQuantity(quantity);
-                displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+                createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name);
             }
         });
 
@@ -189,14 +201,21 @@ public class MainActivity extends AppCompatActivity {
         decrementAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (quantity <= 0) {
-                    quantity = 0;
+                if (quantity <= 1) {
+                    quantity = 1;
+                    Context context = getApplicationContext();
+                    CharSequence text = getString(R.string.toast_message);
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
                 } else {
                     quantity = quantity - 1;
                     displayQuantity(quantity);
                     int priceOfCup = 3;
                     calculatePrice(quantity, priceOfCup);
-                    displayMessage(createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name));
+                    createOrderSummary(calculatePrice(quantity, priceOfCup), hasWhippedCream, hasChocolate, name);
                 }
             }
         });
@@ -235,28 +254,28 @@ public class MainActivity extends AppCompatActivity {
         String addChocolateString;
         name = nameField.getText().toString();
         if(addWhippedCream){
-            addWhippedCreamString = "Whipped cream: YES";
+            addWhippedCreamString = getString(R.string.order_summary_whipped_cream, addWhippedCream);
         }
         else {
-            addWhippedCreamString = "Whipped cream: NO";
+            addWhippedCreamString = getString(R.string.order_summary_whipped_cream, addWhippedCream);
         }
 
         if(addChocolate){
-            addChocolateString = "Chocolate: YES";
+            addChocolateString = getString(R.string.order_summary_chocolate, addChocolate);
         }
         else {
-            addChocolateString = "Chocolate: NO";
+            addChocolateString = getString(R.string.order_summary_chocolate, addChocolate);
         }
         String priceMessage = "";
 
 
-        if (quantity >= 0) {
-            priceMessage = "Name: " + name;
+        if (quantity >= 1) {
+            priceMessage = getString(R.string.user_name, name);
             priceMessage += "\n" + addWhippedCreamString;
             priceMessage += "\n" + addChocolateString;
-            priceMessage += "\nQuantity: " + quantity;
-            priceMessage += "\nTotal: " + NumberFormat.getCurrencyInstance().format(price);
-            priceMessage += "\nThank you!";
+            priceMessage += "\n" + getString(R.string.quantity_justjava, quantity);
+            priceMessage += "\n" + getString(R.string.total_order_summary, NumberFormat.getCurrencyInstance().format(price));
+            priceMessage += "\n" + getString(R.string.thank_you);
             return priceMessage;
         }
         return priceMessage;
@@ -270,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         quantityTextview.setText("" + number);
     }
 
-    private void displayMessage(String message) {
-        priceTextview.setText(message);
-    }
+//    private void displayMessage(String message) {
+//        priceTextview.setText(message);
+//    }
 }

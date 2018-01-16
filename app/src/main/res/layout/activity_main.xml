@@ -2,50 +2,51 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fillViewport="true"
+    android:isScrollContainer="false"
     tools:context="com.example.android.justjava.MainActivity">
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/app_background">
+    android:background="@color/app_background"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/name_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapWords"
-        android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/margin_16dp"/>
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:inputType="textCapWords" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/toppings"
-        android:textAllCaps="true"
         android:layout_marginLeft="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
-        android:textSize="@dimen/toppings_size"
-        android:textColor="@color/white_color"/>
+        android:text="@string/toppings"
+        android:textAllCaps="true"
+        android:textColor="@color/white_color"
+        android:textSize="@dimen/toppings_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
         <CheckBox
             android:id="@+id/whipped_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16dp"
-            android:text="@string/whipped_cream"
-            android:saveEnabled="true"
-            android:textColor="@color/white_color"
             android:buttonTint="@color/white_color"
+            android:saveEnabled="true"
+            android:text="@string/whipped_cream"
+            android:textColor="@color/white_color"
             />
 
         <CheckBox
@@ -53,10 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16dp"
-            android:text="@string/chocolate_topping"
+            android:buttonTint="@color/white_color"
             android:saveEnabled="true"
-            android:textColor="@color/white_color"
-            android:buttonTint="@color/white_color"/>
+            android:text="@string/chocolate_topping"
+            android:textColor="@color/white_color" />
 
     </LinearLayout>
 
@@ -65,17 +66,17 @@
         android:id="@+id/quantity_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/quantity_text"
-        android:textAllCaps="true"
         android:layout_marginBottom="@dimen/margin_16dp"
         android:layout_marginLeft="@dimen/margin_16dp"
-        android:textSize="@dimen/toppings_size"
-        android:textColor="@color/white_color"/>
+        android:text="@string/quantity_text"
+        android:textAllCaps="true"
+        android:textColor="@color/white_color"
+        android:textSize="@dimen/toppings_size" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.75"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
         <Button
@@ -94,10 +95,10 @@
             android:id="@+id/quantity_text_view"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
+            android:gravity="center"
             android:text="@string/quantity_number"
             android:textColor="@color/white_color"
-            android:textSize="@dimen/quantity_size"
-            android:gravity="center"/>
+            android:textSize="@dimen/quantity_size" />
 
         <Button
             android:id="@+id/increment_id"
@@ -106,44 +107,23 @@
             android:background="@drawable/custom_button"
             android:elevation="@dimen/button_elevation"
             android:text="@string/increment_button_string"
-            android:textColor="@color/app_background"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            android:textColor="@color/app_background" />
 
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/summary_label"
-        android:textAllCaps="true"
-        android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/order_summary_title_size"
-        android:textColor="@color/white_color"/>
-
-    <TextView
-        android:id="@+id/price_number_view"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_weight="1.75"
-        android:text="@string/price_number"
-        android:textColor="@color/white_color"
-        />
 
     <Button
         android:id="@+id/submit_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:background="@drawable/custom_button"
+        android:elevation="@dimen/button_elevation"
         android:text="@string/button_text"
         android:textAllCaps="true"
-        android:layout_marginBottom="@dimen/margin_16dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/custom_button"
-        android:textColor="@color/app_background"
-        android:elevation="@dimen/button_elevation"/>
+        android:textColor="@color/app_background" />
 
 
 </LinearLayout>

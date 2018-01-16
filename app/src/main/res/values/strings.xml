@@ -1,14 +1,63 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">>
+    <!--Title for the application. [CHAR LIMIT=12] -->
     <string name="app_name">CaffeInn</string>
+
+    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=20] -->
+    <string name="namefield_hint">Enter your name</string>
+
     <string name="quantity_text">Quantity</string>
-    <string name="quantity_number">0</string>
+    <string name="quantity_number">1</string>
     <string name="button_text">Order</string>
     <string name="summary_label">Order Summary</string>
-    <string name="price_number">0</string>
+    <string name="price_number"></string>
     <string name="toppings">Toppings</string>
-    <string name="whipped_cream">Whipped cream</string>
     <string name="chocolate_topping">Chocolate topping</string>
-    <string name="namefield_hint">Enter your name</string>
     <string name="decrement_button_string">-</string>
     <string name="increment_button_string">+</string>
+    <string name="whipped_cream">Whipped cream</string>
+    <string name="thank_you">Thank you!</string>
+
+    <!--
+        Text for toast message. It will be shown in the format of
+        "You can not have less than one coffee!".
+    -->
+    <string name="toast_message">You can not have less than one coffee!</string>
+
+
+    <!--
+        Whipped cream topping for the order summary. It will be shown in the format of
+        "Add whipped cream: yes" or "Add whipped cream: no". [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_whipped_cream">Add whipped cream: <xliff:g example="true" id="addWhippedCream">%b</xliff:g></string>
+
+    <!--
+        Chocolate topping for the order summary. It will be shown in the format of
+        "Add chocolate: yes" or "Add chocolate: no". [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_chocolate">Add whipped cream: <xliff:g example="true" id="addChocolate">%b</xliff:g></string>
+
+    <!--
+        Chocolate topping for the order summary. It will be shown in the format of
+        "CaffeInn order for: name". [CHAR LIMIT=NONE]
+    -->
+    <string name="caffeinn_order">CaffeInn order for: <xliff:g example="Raivo" id="name">%s</xliff:g></string>
+
+    <!--
+        Chocolate topping for the order summary. It will be shown in the format of
+        "CaffeInn order for: name". [CHAR LIMIT=NONE]
+    -->
+    <string name="total_order_summary">Total: <xliff:g example="3" id="total">%s</xliff:g></string>
+
+    <!--
+        Name for order summary. It will be shown in the format of
+        "Name: name". [CHAR LIMIT=NONE]
+    -->
+    <string name="user_name">Name: <xliff:g example="Raivo" id="name">%s</xliff:g> </string>
+
+    <!--
+        Quantity for order summary. It will be shown in the format of
+        "Quantity: 5". [CHAR LIMIT=2]
+    -->
+    <string name="quantity_justjava">Quantity: <xliff:g example="5" id="quantity">%d</xliff:g> </string>
+
 </resources>
