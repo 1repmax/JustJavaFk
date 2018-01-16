@@ -228,17 +228,15 @@ public class MainActivity extends AppCompatActivity {
      * @return total price
      */
     private int calculatePrice(int quantity, int priceOfCup) {
-        if(hasWhippedCream) {
-            priceOfCup = 4;
-        }
-        if(hasChocolate)
-        {
-            priceOfCup = 4;
-        }
 
         if(hasChocolate && hasWhippedCream) {
             priceOfCup = 5;
+        } else if (hasWhippedCream) {
+            priceOfCup = 4;
+        } else if (hasChocolate) {
+            priceOfCup = 4;
         }
+
         return quantity * priceOfCup;
     }
 
